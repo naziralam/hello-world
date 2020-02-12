@@ -15,7 +15,7 @@ environment {
       stage("Build") {
 	steps {
 	   sh "mvn clean package"
-	   sh "mv target/*.jar target/my-app.jar"
+	   sh "mv target/*.war target/my-app.war"
 	}
       }
 
@@ -34,7 +34,7 @@ environment {
 	   sshagent(['tomcat']) {
 
 	   sh """
-	       scp -o StrictHostKeyChecking=no target/my-app.jar ec2-user@172.31.43.87:/opt/tomcat8/webapps/
+	       scp -o StrictHostKeyChecking=no target/my-app.war ec2-user@172.31.43.87:/opt/tomcat8/webapps/
 	       ssh ec2-user@172.31.43.87 /opt/tomcat8/bin/shutdown.sh
 	       ssh ec2-user@172.31.43.87 /opt/tomcat8/bin/startup.sh
 	     """
